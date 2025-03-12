@@ -30,6 +30,12 @@ jobs:
           echo "List des fichiers dans TestResults"
           ls -R TestResults   # Affiche récursivement le contenu du dossier pour vérifier s'il y a bien des résultats générés
 
+      - name: Upload Test Results as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: TestResults
+          
       - name: Process Test Results
         uses: kishikawakatsumi/xcresulttool@v1
         with:
