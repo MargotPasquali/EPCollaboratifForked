@@ -23,9 +23,9 @@ jobs:
           scheme: EPCollaboratif
           destination: 'platform=iOS Simulator,name=iPhone 16 Pro'
           action: test
-          result-bundle-path: './TestResults/TestResults.xcresult'
-
-      - name: Verify TestResults Directory
+          result-bundle-path: TestResults/TestResults.xcresult
+      
+      - name: List TestResults Directory
         run: ls -R TestResults
 
       - name: Process Test Results
