@@ -20,10 +20,11 @@ jobs:
           scheme: EPCollaboratif
           destination: 'platform=iOS Simulator,name=iPhone 16 Pro'
           action: test
-          result-bundle-path: 'TestResults/TestResults.xcresult'
-
+          result-bundle-path: 'TestResults'
+      
       - name: Process Test Results
         uses: kishikawakatsumi/xcresulttool@v1
         with:
-          path: TestResults/TestResults.xcresult
+          path: TestResults
         if: success() || failure()
+      
