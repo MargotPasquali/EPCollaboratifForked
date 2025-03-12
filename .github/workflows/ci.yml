@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4  # Mise à jour vers v4
 
       - name: Build and Test
         uses: sersoft-gmbh/xcodebuild-action@v3.2.0
@@ -28,10 +28,18 @@ jobs:
           ls -la .
           echo "Listing files in TestResults directory:"
           ls -la TestResults || echo "TestResults directory not found"
-        if: always()  # Exécute cette étape même en cas d'échec
+        if: always()
 
       - name: Process Test Results
         uses: kishikawakatsumi/xcresulttool@v1
         with:
+          path: ./TestResults/TestResults.xcresult
+          upload-artifact: false
+        if: always()
+
+      - name: Upload Test Results Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
           path: ./TestResults/TestResults.xcresult
         if: always()
