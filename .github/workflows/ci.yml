@@ -4,9 +4,6 @@ on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - develop
 
 jobs:
   build-and-test:
@@ -23,21 +20,18 @@ jobs:
           scheme: EPCollaboratif
           destination: 'platform=iOS Simulator,name=iPhone 16 Pro'
           action: test
-          result-bundle-path: 'TestResults/TestResults.xcresult'
+          result-bundle-path: './TestResults/TestResults.xcresult'
 
-      - name: List generated files
+      - name: Debug - List files in TestResults directory
         run: |
-          echo "List des fichiers dans TestResults"
-          ls -R TestResults   # Affiche récursivement le contenu du dossier pour vérifier s'il y a bien des résultats générés
+          echo "Listing files in the workspace:"
+          ls -la .
+          echo "Listing files in TestResults directory:"
+          ls -la TestResults || echo "TestResults directory not found"
+        if: always()  # Exécute cette étape même en cas d'échec
 
-      - name: Upload Test Results as Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results
-          path: TestResults
-          
       - name: Process Test Results
         uses: kishikawakatsumi/xcresulttool@v1
         with:
-          path: TestResults/TestResults.xcresult
-        if: success() || failure()
+          path: ./TestResults/TestResults.xcresult
+        if: always()
