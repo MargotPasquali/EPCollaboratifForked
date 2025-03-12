@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - develop
 
 jobs:
   build-and-test:
@@ -23,11 +26,8 @@ jobs:
           scheme: EPCollaboratif
           destination: 'platform=iOS Simulator,name=iPhone 16 Pro'
           action: test
-          result-bundle-path: TestResults/TestResults.xcresult
+          result-bundle-path: 'TestResults/TestResults.xcresult'
       
-      - name: List TestResults Directory
-        run: ls -R TestResults
-
       - name: Process Test Results
         uses: kishikawakatsumi/xcresulttool@v1
         with:
