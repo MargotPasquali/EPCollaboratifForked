@@ -13,6 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Create TestResults Directory
+        run: mkdir -p TestResults
+
       - name: Build and Test
         uses: sersoft-gmbh/xcodebuild-action@v3.2.0
         with:
@@ -20,11 +23,13 @@ jobs:
           scheme: EPCollaboratif
           destination: 'platform=iOS Simulator,name=iPhone 16 Pro'
           action: test
-          result-bundle-path: 'TestResults'
-      
+          result-bundle-path: './TestResults/TestResults.xcresult'
+
+      - name: Verify TestResults Directory
+        run: ls -R TestResults
+
       - name: Process Test Results
         uses: kishikawakatsumi/xcresulttool@v1
         with:
-          path: TestResults
+          path: TestResults/TestResults.xcresult
         if: success() || failure()
-      
