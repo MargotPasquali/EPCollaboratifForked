@@ -16,9 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create TestResults Directory
-        run: mkdir -p TestResults
-
       - name: Build and Test
         uses: sersoft-gmbh/xcodebuild-action@v3.2.0
         with:
@@ -27,7 +24,12 @@ jobs:
           destination: 'platform=iOS Simulator,name=iPhone 16 Pro'
           action: test
           result-bundle-path: 'TestResults/TestResults.xcresult'
-      
+
+      - name: List generated files
+        run: |
+          echo "List des fichiers dans TestResults"
+          ls -R TestResults   # Affiche récursivement le contenu du dossier pour vérifier s'il y a bien des résultats générés
+
       - name: Process Test Results
         uses: kishikawakatsumi/xcresulttool@v1
         with:
