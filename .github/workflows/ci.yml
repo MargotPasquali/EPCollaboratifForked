@@ -34,7 +34,7 @@ jobs:
         uses: kishikawakatsumi/xcresulttool@v1
         with:
           path: ./TestResults/TestResults.xcresult
-          upload-artifact: false
+          upload-bundles: 'never'
         if: always()
 
       - name: Upload Test Results Artifact
